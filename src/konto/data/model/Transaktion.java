@@ -146,5 +146,10 @@ public class Transaktion {
     public int getTypeId() {
 	return typeId;
     }
+    
+    @Override
+    public String toString() {
+	return "Transaktion [ID=" + transaktionsId + ", text=" + transaktionsText + ", betrag=" + transaktionsBetrag;
+    }
 
 }
