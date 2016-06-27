@@ -27,7 +27,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 		    + "(transaktion_date, transaktion_betrag, transaktion_text, transaktion_type, konto_id, transaktion_hash) "
 		    + "values(?, ?, ?, ?, ?, ?)";
 	    pStmt = connect.prepareStatement((pSql), Statement.RETURN_GENERATED_KEYS);
-	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(transaktion.getTransaktionsDate()));
+	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(new Date(transaktion.getTransaktionsDate())));
 	    pStmt.setDouble(2, transaktion.getTransaktionsBetrag());
 	    pStmt.setString(3, transaktion.getTransaktionsText());
 	    pStmt.setInt(4, transaktion.getTypeId());
@@ -52,7 +52,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	try {
 	    String pSql = "update db_transaktion set transaktion_date = ?, transaktion_betrag = ?, transaktion_text = ?, transaktion_type = ?, konto_id = ?, transaktion_hash = ? where transaktion_id = ?";
 	    pStmt = connect.prepareStatement(pSql);
-	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(transaktion.getTransaktionsDate()));
+	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(new Date(transaktion.getTransaktionsDate())));
 	    pStmt.setDouble(2, transaktion.getTransaktionsBetrag());
 	    pStmt.setString(3, transaktion.getTransaktionsText());
 	    pStmt.setInt(4, transaktion.getTypeId());
@@ -97,7 +97,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	    
 	    System.out.println("user ID: " + user.getUserId());
 	    while (resSet.next()) {
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
@@ -144,7 +144,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	    
 	    while (resSet.next()) {
 
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
@@ -193,7 +193,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 
 	    resSet = pStmt.executeQuery();
 	    while (resSet.next()) {
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
@@ -241,7 +241,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	    resSet = pStmt.executeQuery();
 
 	    while (resSet.next()) {
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
@@ -286,7 +286,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 
 	    resSet = pStmt.executeQuery();
 	    while (resSet.next()) {
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
@@ -351,7 +351,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	    resSet = pStmt.executeQuery();
 	    
 	    while (resSet.next()) {
-		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)),
+		transaktionList.add(new Transaktion(resSet.getInt(1), DateConverter.convertSqlToUtilDate(resSet.getDate(2)).getTime(),
 			resSet.getDouble(3), resSet.getString(4), resSet.getString(7), resSet.getInt(6),
 			resSet.getInt(5)));
 	    }
