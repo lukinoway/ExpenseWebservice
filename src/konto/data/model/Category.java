@@ -5,6 +5,10 @@ public class Category {
     private int typeId;
     private String typeText;
     private int parent;
+    
+    public Category() {
+	super();
+    }
 
     /**
      * use for new Category

@@ -15,6 +15,10 @@ public class Transaktion {
     private int kontoId;
     private int typeId;
 
+    
+    public Transaktion() {
+	super();
+    }
     /**
      * this will be used to read csv and write to DB / tr_id will be created in
      * DB

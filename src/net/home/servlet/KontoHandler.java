@@ -6,8 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.json.JSONObject;
-
+import org.codehaus.jackson.map.ObjectMapper;
 import konto.data.DBUtil.IKonto;
 import konto.data.DBUtil.KontoDBUtil;
 import konto.data.model.Konto;
@@ -44,7 +43,6 @@ public class KontoHandler {
 	    System.out.println("input <" + input + ">");
 	    Konto konto = buildKonto(input);
 	    
-	    // now add the konto to DB
 	    IKonto util = new KontoDBUtil();
 	    util.updateKonto(konto);
 	    
@@ -55,16 +53,28 @@ public class KontoHandler {
 	}
     }
     
-    private Konto buildKonto(String in) {
-	JSONObject elem = new JSONObject(in);
-	String knr = elem.getString("kontoNr");
-	String kname = elem.getString("kontoName");
-	boolean visible = elem.getBoolean("visible");
-	String kontoTransferInfo = elem.getString("kontoTransferInfo");
-	String bankURL = elem.getString("bankURL");
-	Integer user = elem.getInt("userId");
-	return new Konto(knr, kname, user, visible, kontoTransferInfo, bankURL);
-	
+    @POST
+    @Path("/deletekonto")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteKonto(String input) {
+	try {
+	    System.out.println("input <" + input + ">");
+	    Konto konto = buildKonto(input);
+	    
+	    IKonto util = new KontoDBUtil();
+	    util.deleteKonto(konto);
+	    
+	    return "deleted konto; ID=" + konto.getKontoId();
+	} catch(Exception e) {
+	    e.printStackTrace();
+	    return "error while delete of konto:\n" + e.toString();
+	}
+    }
+    
+    private Konto buildKonto(String in) throws Exception {
+	ObjectMapper mapper = new ObjectMapper();
+	return mapper.readValue(in, Konto.class);
     }
 
 }

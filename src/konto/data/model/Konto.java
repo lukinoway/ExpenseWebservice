@@ -9,6 +9,10 @@ public class Konto {
     private String bankURL;
     private int userId;
     private boolean visible;
+    
+    public Konto(){
+	super();
+    }
 
     public Konto(String knr, String kname, int user, boolean visible, String kontoTransferInfo, String bankURL) {
 	this.kontoId = 0;
