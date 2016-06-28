@@ -56,7 +56,7 @@ public class TransaktionHandler {
 	try {
 	    ITransaktion transaktionUtil = new TransaktionDBUtil();
 	    Transaktion transaktion = buildTransaktion(input);
-	    transaktionUtil.deleteTransaktion(transaktion);
+	    transaktionUtil.updateTransaktion(transaktion);
 	    return "delete Transaktion: " + transaktion.toString();
 	} catch (Exception e) {
 	    e.printStackTrace();

@@ -11,7 +11,7 @@ public class Transaktion {
     private Double transaktionsBetrag;
     private String transaktionsText;
     private String transaktionsHash;
-    private long transaktionsDate;
+    private Date transaktionsDate;
     private int kontoId;
     private int typeId;
 
@@ -28,7 +28,7 @@ public class Transaktion {
      * @param tr_text
      * @throws NoSuchAlgorithmException
      */
-    public Transaktion(long tr_date, Double tr_betrag, String tr_text, int kontoId, int typeId)
+    public Transaktion(Date tr_date, Double tr_betrag, String tr_text, int kontoId, int typeId)
 	    throws NoSuchAlgorithmException {
 
 	// set values
@@ -54,7 +54,7 @@ public class Transaktion {
      * @param tr_text
      * @param tr_hash
      */
-    public Transaktion(int tr_id, long tr_date, Double tr_betrag, String tr_text, String tr_hash, int kontoId,
+    public Transaktion(int tr_id, Date tr_date, Double tr_betrag, String tr_text, String tr_hash, int kontoId,
 	    int typeId) {
 
 	// set values
@@ -75,7 +75,7 @@ public class Transaktion {
 	this.transaktionsText = transaktionsText;
     }
 
-    public void setTransaktionsDate(long transaktionsDate) {
+    public void setTransaktionsDate(Date transaktionsDate) {
 	this.transaktionsDate = transaktionsDate;
     }
 
@@ -107,7 +107,7 @@ public class Transaktion {
     }
 
     // transaktions date handling
-    public long getTransaktionsDate() {
+    public Date getTransaktionsDate() {
 	return transaktionsDate;
     }
 
@@ -122,7 +122,7 @@ public class Transaktion {
      * @throws NoSuchAlgorithmException
      */
     public void createTransaktionsHash() throws NoSuchAlgorithmException {
-	String in_string = this.transaktionsText + this.transaktionsDate + this.transaktionsBetrag;
+	String in_string = this.transaktionsText + this.transaktionsDate.toString() + this.transaktionsBetrag;
 	try {
 	    MessageDigest m = MessageDigest.getInstance("MD5");
 	    m.reset();
