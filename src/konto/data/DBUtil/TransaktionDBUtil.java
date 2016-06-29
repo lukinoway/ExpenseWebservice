@@ -27,7 +27,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 		    + "(transaktion_date, transaktion_betrag, transaktion_text, transaktion_type, konto_id, transaktion_hash) "
 		    + "values(?, ?, ?, ?, ?, ?)";
 	    pStmt = connect.prepareStatement((pSql), Statement.RETURN_GENERATED_KEYS);
-	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(transaktion.getTransaktionsDate()));
+	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(new Date(transaktion.getTransaktionsDate())));
 	    pStmt.setDouble(2, transaktion.getTransaktionsBetrag());
 	    pStmt.setString(3, transaktion.getTransaktionsText());
 	    pStmt.setInt(4, transaktion.getTypeId());
@@ -52,7 +52,7 @@ public class TransaktionDBUtil extends DBCommunicator implements ITransaktion {
 	try {
 	    String pSql = "update db_transaktion set transaktion_date = ?, transaktion_betrag = ?, transaktion_text = ?, transaktion_type = ?, konto_id = ?, transaktion_hash = ? where transaktion_id = ?";
 	    pStmt = connect.prepareStatement(pSql);
-	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(transaktion.getTransaktionsDate()));
+	    pStmt.setDate(1, DateConverter.convertUtilToSqlDate(new Date(transaktion.getTransaktionsDate())));
 	    pStmt.setDouble(2, transaktion.getTransaktionsBetrag());
 	    pStmt.setString(3, transaktion.getTransaktionsText());
 	    pStmt.setInt(4, transaktion.getTypeId());

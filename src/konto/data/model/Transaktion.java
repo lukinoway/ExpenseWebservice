@@ -11,7 +11,7 @@ public class Transaktion {
     private Double transaktionsBetrag;
     private String transaktionsText;
     private String transaktionsHash;
-    private Date transaktionsDate;
+    private long transaktionsDate;
     private int kontoId;
     private int typeId;
 
@@ -32,7 +32,7 @@ public class Transaktion {
 	    throws NoSuchAlgorithmException {
 
 	// set values
-	this.transaktionsDate = tr_date;
+	this.transaktionsDate = tr_date.getTime();
 	this.transaktionsBetrag = tr_betrag;
 	this.transaktionsText = tr_text;
 	this.kontoId = kontoId;
@@ -58,7 +58,7 @@ public class Transaktion {
 	    int typeId) {
 
 	// set values
-	this.transaktionsDate = tr_date;
+	this.transaktionsDate = tr_date.getTime();
 	this.transaktionsBetrag = tr_betrag;
 	this.transaktionsText = tr_text;
 	this.transaktionsId = tr_id;
@@ -76,7 +76,7 @@ public class Transaktion {
     }
 
     public void setTransaktionsDate(Date transaktionsDate) {
-	this.transaktionsDate = transaktionsDate;
+	this.transaktionsDate = transaktionsDate.getTime();
     }
 
     public void setKontoId(int kontoId) {
@@ -107,7 +107,7 @@ public class Transaktion {
     }
 
     // transaktions date handling
-    public Date getTransaktionsDate() {
+    public long getTransaktionsDate() {
 	return transaktionsDate;
     }
 
@@ -122,7 +122,7 @@ public class Transaktion {
      * @throws NoSuchAlgorithmException
      */
     public void createTransaktionsHash() throws NoSuchAlgorithmException {
-	String in_string = this.transaktionsText + this.transaktionsDate.toString() + this.transaktionsBetrag;
+	String in_string = this.transaktionsText + this.transaktionsDate + this.transaktionsBetrag;
 	try {
 	    MessageDigest m = MessageDigest.getInstance("MD5");
 	    m.reset();
