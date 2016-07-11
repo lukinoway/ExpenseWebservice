@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import konto.data.DBUtil.IKonto;
 import konto.data.DBUtil.IUser;
 import konto.data.DBUtil.KontoDBUtil;
 import konto.data.DBUtil.UserDBUtil;
+import konto.data.Util.BuildResponse;
 import konto.data.model.Konto;
 import konto.data.model.LoginUser;
 
@@ -23,7 +25,7 @@ public class KontoList {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user/{user}/pass/{pass}")
-    public String getCategoryList(@PathParam("user") String username, @PathParam("pass") String pwd) {
+    public Response getCategoryList(@PathParam("user") String username, @PathParam("pass") String pwd) {
 
 	// check user
 	LoginUser user = new LoginUser(username, pwd);
@@ -34,9 +36,9 @@ public class KontoList {
 	    JSONObject data = new JSONObject();
 	    IKonto util = new KontoDBUtil();
 	    ArrayList<Konto> kontoList = util.getKontoForUser(user);
-	    return data.put("konto", kontoList).toString();
+	    return BuildResponse.buildOKResponse(data.put("konto", kontoList).toString());
 	} else {
-	    return "wrong user / password";
+	    return BuildResponse.buildErrorReposne("wrong user / password");
 	}
 
     }

@@ -5,10 +5,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import konto.data.DBUtil.IKonto;
 import konto.data.DBUtil.KontoDBUtil;
+import konto.data.Util.BuildResponse;
 import konto.data.model.Konto;
 
 @Path("kontohandler")
@@ -18,7 +20,7 @@ public class KontoHandler {
     @Path("/addkonto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String addKonto(String input) {
+    public Response addKonto(String input) {
 	try {
 	    System.out.println("input <" + input + ">");
 	    Konto konto = buildKonto(input);
@@ -27,10 +29,10 @@ public class KontoHandler {
 	    IKonto util = new KontoDBUtil();
 	    util.createKonto(konto);
 	    
-	    return "created new konto; ID=" + konto.getKontoId();
+	    return BuildResponse.buildErrorReposne("created new konto; ID=" + konto.getKontoId());
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while adding new konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while adding new konto:\n" + e.toString());
 	}
     }
     
@@ -38,7 +40,7 @@ public class KontoHandler {
     @Path("/updatekonto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateKonto(String input) {
+    public Response updateKonto(String input) {
 	try {
 	    System.out.println("input <" + input + ">");
 	    Konto konto = buildKonto(input);
@@ -46,10 +48,10 @@ public class KontoHandler {
 	    IKonto util = new KontoDBUtil();
 	    util.updateKonto(konto);
 	    
-	    return "updated konto; ID=" + konto.getKontoId();
+	    return BuildResponse.buildOKResponse("updated konto; ID=" + konto.getKontoId());
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while update of konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while update of konto:\n" + e.toString());
 	}
     }
     
@@ -57,7 +59,7 @@ public class KontoHandler {
     @Path("/deletekonto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteKonto(String input) {
+    public Response deleteKonto(String input) {
 	try {
 	    System.out.println("input <" + input + ">");
 	    Konto konto = buildKonto(input);
@@ -65,10 +67,10 @@ public class KontoHandler {
 	    IKonto util = new KontoDBUtil();
 	    util.deleteKonto(konto);
 	    
-	    return "deleted konto; ID=" + konto.getKontoId();
+	    return BuildResponse.buildOKResponse("deleted konto; ID=" + konto.getKontoId());
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while delete of konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while delete of konto:\n" + e.toString());
 	}
     }
     

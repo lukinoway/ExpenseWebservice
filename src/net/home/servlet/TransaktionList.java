@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import konto.data.DBUtil.ITransaktion;
 import konto.data.DBUtil.IUser;
 import konto.data.DBUtil.TransaktionDBUtil;
 import konto.data.DBUtil.UserDBUtil;
+import konto.data.Util.BuildResponse;
 import konto.data.model.LoginUser;
 import konto.data.model.Transaktion;
 
@@ -23,7 +25,7 @@ public class TransaktionList {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all/user/{user}/pass/{pass}")
-    public String getAllTransaktions(@PathParam("user") String username,
+    public Response getAllTransaktions(@PathParam("user") String username,
 	    			     @PathParam("pass") String pwd) {
 	// check user
 	LoginUser user = new LoginUser(username, pwd);
@@ -34,9 +36,9 @@ public class TransaktionList {
 	    JSONObject data = new JSONObject();
 	    ITransaktion transaktionUtil = new TransaktionDBUtil();
 	    ArrayList<Transaktion> transaktionList = transaktionUtil.getAllTransaktionsForUser(user);
-	    return data.put("transaktion", transaktionList).toString();
+	    return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
 	} else {
-	    return "wrong user / password";
+	    return BuildResponse.buildErrorReposne("wrong user / password");
 	}
 	
     }
@@ -44,7 +46,7 @@ public class TransaktionList {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/last10/user/{user}/pass/{pass}")
-    public String getLast10Transaktions(@PathParam("user") String username,
+    public Response getLast10Transaktions(@PathParam("user") String username,
 	    			     @PathParam("pass") String pwd) {
 	// check user
 	LoginUser user = new LoginUser(username, pwd);
@@ -55,9 +57,9 @@ public class TransaktionList {
 	    JSONObject data = new JSONObject();
 	    ITransaktion transaktionUtil = new TransaktionDBUtil();
 	    ArrayList<Transaktion> transaktionList = transaktionUtil.getLast10TransaktionsForUser(user);
-	    return data.put("transaktion", transaktionList).toString();
+	    return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
 	} else {
-	    return "wrong user / password";
+	    return BuildResponse.buildErrorReposne("wrong user / password");
 	}
 	
     }

@@ -5,11 +5,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
 import konto.data.DBUtil.CategoryDBUtil;
 import konto.data.DBUtil.ICategory;
+import konto.data.Util.BuildResponse;
 import konto.data.model.Category;
 
 @Path("categoryhandler")
@@ -19,16 +21,16 @@ public class CategoryHandler {
     @Path("/addcategory")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String addCategory(String input) {
+    public Response addCategory(String input) {
 	try {
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.createCategory(category);
 	    
-	    return "created new category; ID=" + category.getTypeId();
+	    return BuildResponse.buildOKResponse("created new category; ID=" + category.getTypeId());
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while adding new konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while adding new konto:\n" + e.toString());
 	}
     }
     
@@ -36,16 +38,16 @@ public class CategoryHandler {
     @Path("/updatecategory")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateCategory(String input) {
+    public Response updateCategory(String input) {
 	try {
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.updateCategory(category);
 	    
-	    return "updated category";
+	    return BuildResponse.buildOKResponse("updated category");
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while adding new konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while updating konto:\n" + e.toString());
 	}
     }
     
@@ -53,16 +55,16 @@ public class CategoryHandler {
     @Path("/deletecategory")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteCategory(String input) {
+    public Response deleteCategory(String input) {
 	try {
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.deleteCategory(category);
 	    
-	    return "deleted category; ID=" + category.getTypeId();
+	    return BuildResponse.buildOKResponse("deleted category; ID=" + category.getTypeId());
 	} catch(Exception e) {
 	    e.printStackTrace();
-	    return "error while adding new konto:\n" + e.toString();
+	    return BuildResponse.buildErrorReposne("error while deleting konto:\n" + e.toString());
 	}
     }
     
