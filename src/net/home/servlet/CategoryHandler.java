@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -14,6 +15,7 @@ import konto.data.DBUtil.ICategory;
 import konto.data.Util.BuildResponse;
 import konto.data.model.Category;
 
+@Provider
 @Path("categoryhandler")
 public class CategoryHandler {
     
@@ -23,6 +25,7 @@ public class CategoryHandler {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCategory(String input) {
 	try {
+	    System.out.println("input <" + input + ">");
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.createCategory(category);
@@ -40,6 +43,7 @@ public class CategoryHandler {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCategory(String input) {
 	try {
+	    System.out.println("input <" + input + ">");
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.updateCategory(category);
@@ -57,6 +61,7 @@ public class CategoryHandler {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteCategory(String input) {
 	try {
+	    System.out.println("input <" + input + ">");
 	    ICategory catUtil = new CategoryDBUtil();
 	    Category category = buildCategory(input);
 	    catUtil.deleteCategory(category);
