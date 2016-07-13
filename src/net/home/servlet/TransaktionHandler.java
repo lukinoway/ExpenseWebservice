@@ -25,6 +25,7 @@ public class TransaktionHandler {
 	try {
 	    ITransaktion transaktionUtil = new TransaktionDBUtil();
 	    Transaktion transaktion = buildTransaktion(input);
+	    transaktion.createTransaktionsHash();
 	    transaktionUtil.createTransaktion(transaktion);
 	    return BuildResponse.buildOKResponse("added transaktion; ID="+transaktion.getTransaktionsId());
 	} catch (Exception e) {
