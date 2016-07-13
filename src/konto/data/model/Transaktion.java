@@ -3,6 +3,7 @@ package konto.data.model;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transaktion {
@@ -12,6 +13,7 @@ public class Transaktion {
     private String transaktionsText;
     private String transaktionsHash;
     private long transaktionsDate;
+    private String transaktionsDateString;
     private int kontoId;
     private int typeId;
 
@@ -56,8 +58,12 @@ public class Transaktion {
      */
     public Transaktion(int tr_id, Date tr_date, Double tr_betrag, String tr_text, String tr_hash, int kontoId,
 	    int typeId) {
+	
+	String pattern = "yyyy-MM-dd";
+	SimpleDateFormat format = new SimpleDateFormat(pattern);
 
 	// set values
+	this.transaktionsDateString = format.format(tr_date);
 	this.transaktionsDate = tr_date.getTime();
 	this.transaktionsBetrag = tr_betrag;
 	this.transaktionsText = tr_text;
@@ -151,6 +157,12 @@ public class Transaktion {
 	return typeId;
     }
     
+    public String getTransaktionsDateString() {
+	return transaktionsDateString;
+    }
+    public void setTransaktionsDateString(String transaktionsDateString) {
+	this.transaktionsDateString = transaktionsDateString;
+    }
     @Override
     public String toString() {
 	return "Transaktion [ID=" + transaktionsId + ", text=" + transaktionsText + ", betrag=" + transaktionsBetrag;
