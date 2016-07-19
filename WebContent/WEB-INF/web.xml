@@ -37,7 +37,7 @@
 		<init-param>
 			<param-name>cors.supportedHeaders</param-name>
 			<param-value>Accept, Origin, X-Requested-With, Content-Type,
-                Last-Modified, WWW-Authenticate</param-value>
+                Last-Modified, WWW-Authenticate, Authorization</param-value>
 		</init-param>
 		<init-param>
 			<param-name>cors.exposedHeaders</param-name>
@@ -52,7 +52,7 @@
 		<filter-name>CORS</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- 
+	 
 	<filter>
 	    <filter-name>AuthenticationFilter</filter-name>
 	    <filter-class>net.home.servlet.RestAuthenticationFilter</filter-class>
@@ -61,6 +61,6 @@
     	<filter-name>AuthenticationFilter</filter-name>
 		<url-pattern>/*</url-pattern>
   	</filter-mapping>
-  	-->
+  	
 
 </web-app>
