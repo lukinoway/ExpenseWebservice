@@ -19,27 +19,29 @@ import konto.data.Util.BuildResponse;
 import konto.data.model.Konto;
 import konto.data.model.LoginUser;
 
-@Path("konto")
+@Path("kontolist")
 public class KontoList {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("user/{user}/pass/{pass}")
-    public Response getCategoryList(@PathParam("user") String username, @PathParam("pass") String pwd) {
+    @Path("user/{user}")
+    public Response getKontoList(@PathParam("user") String username) {
 
 	// check user
-	LoginUser user = new LoginUser(username, pwd);
+	LoginUser user = new LoginUser(username, "");
 	IUser userUtil = new UserDBUtil();
-
-	if (userUtil.validateLogin(user)) {
-	    userUtil.loadUserId(user);
-	    JSONObject data = new JSONObject();
-	    IKonto util = new KontoDBUtil();
-	    ArrayList<Konto> kontoList = util.getKontoForUser(user);
-	    return BuildResponse.buildOKResponse(data.put("konto", kontoList).toString());
-	} else {
-	    return BuildResponse.buildErrorReposne("wrong user / password");
+	userUtil.loadUserId(user);
+	
+	// send error if user couldn't be found
+	if(user.getUserId() == -1) {
+	    return BuildResponse.buildErrorReposne("unknown user:" + user.getUserName());
 	}
+	
+	JSONObject data = new JSONObject();
+	IKonto util = new KontoDBUtil();
+	ArrayList<Konto> kontoList = util.getKontoForUser(user);
+	
+	return BuildResponse.buildOKResponse(data.put("konto", kontoList).toString());
 
     }
 }

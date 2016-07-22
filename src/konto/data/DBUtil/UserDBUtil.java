@@ -74,16 +74,19 @@ public class UserDBUtil extends DBCommunicator implements IUser {
 
     public void loadUserId(LoginUser user) {
 	try {
-	    String pSql = "select max(user_id) from  db_user where user_name = ? and user_pass_hash = ?";
+	    String pSql = "select max(user_id) from  db_user where user_name = ?";
 	    pStmt = connect.prepareStatement(pSql);
 	    pStmt.setString(1, user.getUserName());
-	    pStmt.setString(2, user.getUserHash());
+//	    pStmt.setString(2, user.getUserHash());
 
 	    resSet = pStmt.executeQuery();
 	    resSet.next();
 
 	    if (resSet.getInt(1) > 0) {
 		user.setUserId(resSet.getInt(1));
+	    }
+	    else {
+		user.setUserId(-1);
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();

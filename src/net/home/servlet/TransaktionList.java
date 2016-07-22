@@ -24,44 +24,45 @@ public class TransaktionList {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/all/user/{user}/pass/{pass}")
-    public Response getAllTransaktions(@PathParam("user") String username,
-	    			     @PathParam("pass") String pwd) {
+    @Path("/all/user/{user}")
+    public Response getAllTransaktions(@PathParam("user") String username) {
 	// check user
-	LoginUser user = new LoginUser(username, pwd);
+	LoginUser user = new LoginUser(username, "");
 	IUser userUtil = new UserDBUtil();
+	userUtil.loadUserId(user);
 	
-	if (userUtil.validateLogin(user)) {
-	    userUtil.loadUserId(user);
-	    JSONObject data = new JSONObject();
-	    ITransaktion transaktionUtil = new TransaktionDBUtil();
-	    ArrayList<Transaktion> transaktionList = transaktionUtil.getAllTransaktionsForUser(user);
-	    return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
-	} else {
-	    return BuildResponse.buildErrorReposne("wrong user / password");
+	// send error if user couldn't be found
+	if(user.getUserId() == -1) {
+	    return BuildResponse.buildErrorReposne("unknown user:" + user.getUserName());
 	}
+	
+	JSONObject data = new JSONObject();
+	ITransaktion transaktionUtil = new TransaktionDBUtil();
+	ArrayList<Transaktion> transaktionList = transaktionUtil.getAllTransaktionsForUser(user);
+	
+	return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
 	
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/last10/user/{user}/pass/{pass}")
-    public Response getLast10Transaktions(@PathParam("user") String username,
-	    			     @PathParam("pass") String pwd) {
+    @Path("/last10/user/{user}")
+    public Response getLast10Transaktions(@PathParam("user") String username) {
 	// check user
-	LoginUser user = new LoginUser(username, pwd);
+	LoginUser user = new LoginUser(username, "");
 	IUser userUtil = new UserDBUtil();
+	userUtil.loadUserId(user);
 	
-	if (userUtil.validateLogin(user)) {
-	    userUtil.loadUserId(user);
-	    JSONObject data = new JSONObject();
-	    ITransaktion transaktionUtil = new TransaktionDBUtil();
-	    ArrayList<Transaktion> transaktionList = transaktionUtil.getLast10TransaktionsForUser(user);
-	    return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
-	} else {
-	    return BuildResponse.buildErrorReposne("wrong user / password");
+	// send error if user couldn't be found
+	if(user.getUserId() == -1) {
+	    return BuildResponse.buildErrorReposne("unknown user:" + user.getUserName());
 	}
 	
+	JSONObject data = new JSONObject();
+	ITransaktion transaktionUtil = new TransaktionDBUtil();
+	ArrayList<Transaktion> transaktionList = transaktionUtil.getLast10TransaktionsForUser(user);
+	return BuildResponse.buildOKResponse(data.put("transaktion", transaktionList).toString());
+
     }
 
 }
