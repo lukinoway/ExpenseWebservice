@@ -70,7 +70,7 @@ public class CategoryDBUtil extends DBCommunicator implements ICategory {
     public ArrayList<Category> getAllCategories() {
 	ArrayList<Category> categoryList = new ArrayList<Category>();
 	try {
-	    String pSql = "select type_id, type_text from db_transaktion_type";
+	    String pSql = "select type_id, type_text from db_transaktion_type order by type_text";
 	    pStmt = connect.prepareStatement(pSql);
 	    resSet = pStmt.executeQuery();
 
